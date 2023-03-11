@@ -4,6 +4,9 @@ const api = create ({
     baseURL: "https://itunes.apple.com/"
 })
 const endpoints = {
-
+    getPodcastsList(qty){
+        return api.get(`us/rss/toppodcasts/limit=${qty}/genre=1310/json`)
+        .then(({ data }) => data?.feed?.entry)
+    },
 }
 export default endpoints
