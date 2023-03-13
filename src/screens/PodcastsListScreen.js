@@ -10,24 +10,29 @@ const PodcastsListScreen = () => {
     const routerNavigate = useNavigate()
     const [podcastList, setPodcastList] = useState([])
     const [filterValue, setFilterValue] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleClickOnPodcast = (podcastId) => {
-        routerNavigate(`${podcastId}`)
+        routerNavigate(`podcast/${podcastId}`)
     }
     const fetchPodcastsList = () => {
-        return api.getPodcastsList(FETCH_QTY).then(data => {
-            const formattedList = data.map((item) => ({
-                name: item['im:name']?.label,
-                image: item['im:image'][0]?.label,
-                author: item['im:artist']?.label,
-                id: item.id?.attributes?.['im:id']
+        setIsLoading(true)
+        return api.getPodcastsList(FETCH_QTY)
+            .then(data => {
+                const formattedList = data.map((item) => ({
+                    name: item['im:name']?.label,
+                    image: item['im:image'][0]?.label,
+                    author: item['im:artist']?.label,
+                    summary: item.summary?.label,
+                    id: item.id?.attributes?.['im:id']
 
-            }))
-            setPodcastList(formattedList)
-            const now = new Date().getTime()
-            const oneDayInSecs = 24 * 60 * 60
-            localStorage.setItem(STORED_DATA_KEY, JSON.stringify({ value: formattedList, expiry: now + oneDayInSecs}))
-        })
+                }))
+                setPodcastList(formattedList)
+                const now = new Date().getTime()
+                const oneDayInSecs = 24 * 60 * 60
+                localStorage.setItem(STORED_DATA_KEY, JSON.stringify({ value: formattedList, expiry: now + oneDayInSecs}))
+            })
+            .finally(() => setIsLoading(false))
     }
     const filteredPodcastList = useMemo(() => {
         return podcastList.filter(({ name, author }) => {
@@ -55,12 +60,9 @@ const PodcastsListScreen = () => {
                     <input type="text" name="filter" id="filter" placeholder="Filter podcasts..." className="border border-gray-200 py-1 px-2 rounded" value={filterValue} onChange={(e) => setFilterValue(e.target.value)} />
                 </div>
             </div>
+            {isLoading && <p className='w-full text-center'>loading...</p>}
             <div className='grid grid-cols-4 gap-4'>
-                {!!filteredPodcastList.length && filteredPodcastList.map((podcast, idx) => {
-                    return (
-                            <PodcastCard key={idx} { ...podcast } handleClickOnPodcast={handleClickOnPodcast} />
-                    )
-                })}
+                {!isLoading && !!filteredPodcastList.length && filteredPodcastList.map((podcast, idx) => <PodcastCard key={idx} { ...podcast } handleClickOnPodcast={handleClickOnPodcast} />)}
             </div>
         </div>
     )
