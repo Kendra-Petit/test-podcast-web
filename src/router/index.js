@@ -8,12 +8,12 @@ const appRoutes = [
       component: PodcastsListScreen,
    },
    {
-      path: `${ROOT_SLUG}/:podcastId`,
+      path: `${ROOT_SLUG}/podcast/:podcastId`,
       name: 'Podcast Detail',
       component: PodcastDetailScreen,
    },
    {
-      path: `${ROOT_SLUG}/:podcastId/episode/:episodeId`,
+      path: `${ROOT_SLUG}/podcast/:podcastId/episode/:episodeId`,
       name: 'Podcast Episode Detail',
       component: PodcastEpisodeDetailScreen,
    },

@@ -2,9 +2,7 @@ import { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from "../api"
 import { PodcastCard } from '../components'
-
-const STORED_DATA_KEY = 'podcasts'
-const FETCH_QTY = 100
+import { STORED_DATA_KEY, FETCH_QTY } from '../entities'
 
 const PodcastsListScreen = () => {
     const routerNavigate = useNavigate()
