@@ -41,12 +41,11 @@ const PodcastDetailScreen = () => {
 
     return (
         <div className="PodcastDetailScreen px-6 pb-6">
-            <p onClick={() => routerNavigate(-1)}>Go back</p>
             {isLoading && <p className='w-full text-center'>loading...</p>}
             {!isLoading && !Object.keys(podcastDetail).length && <p className='w-full text-center'>Failed to load data!</p>}
             {!isLoading && !!Object.keys(podcastDetail).length && (
-                <div className="flex gap-4 mt-4">
-                    <div className="Card w-60 border border-gray-200 drop-shadow-sm p-4 flex flex-col items-center rounded">
+                <div className="flex gap-4 mt-4 flex-col md:flex-row">
+                    <div className="Card w-full md:w-60 border border-gray-200 drop-shadow-sm p-4 flex flex-col items-center rounded">
                         <div
                             className="PodcastImage rounded overflow-hidden h-40 w-full bg-center bg-cover"
                             style={{ backgroundImage: `url('${podcastDetail?.image}')` }}

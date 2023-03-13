@@ -59,7 +59,7 @@ const PodcastsListScreen = () => {
                 </div>
             </div>
             {isLoading && <p className='w-full text-center'>loading...</p>}
-            <div className='grid grid-cols-4 gap-4'>
+            <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
                 {!isLoading && !!filteredPodcastList.length && filteredPodcastList.map((podcast, idx) => <PodcastCard key={idx} { ...podcast } handleClickOnPodcast={handleClickOnPodcast} />)}
             </div>
         </div>
