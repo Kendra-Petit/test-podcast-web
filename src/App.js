@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
 import mainRoutes from "./router"
 import { Header } from './components'
+import 'primeicons/primeicons.css'
 
 const AppLayout = () => {
   return (

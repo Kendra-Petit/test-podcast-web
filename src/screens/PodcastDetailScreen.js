@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import api from "../api"
 import { STORED_DATA_KEY, LIST_FIELDS } from '../entities'
+import { DetailSidebarCard } from '../components'
 
 const PodcastDetailScreen = () => {
     const routerNavigate = useNavigate()
@@ -41,20 +42,13 @@ const PodcastDetailScreen = () => {
 
     return (
         <div className="PodcastDetailScreen px-6 pb-6">
-            {isLoading && <p className='w-full text-center'>loading...</p>}
+            {isLoading && <div className="flex justify-center items-center">
+                <i className='pi pi-spinner animate-spin text-2xl text-blue-500'></i>
+            </div>}
             {!isLoading && !Object.keys(podcastDetail).length && <p className='w-full text-center'>Failed to load data!</p>}
             {!isLoading && !!Object.keys(podcastDetail).length && (
                 <div className="flex gap-4 mt-4 flex-col md:flex-row">
-                    <div className="Card w-full md:w-60 border border-gray-200 drop-shadow-sm p-4 flex flex-col items-center rounded">
-                        <div
-                            className="PodcastImage rounded overflow-hidden h-40 w-full bg-center bg-cover"
-                            style={{ backgroundImage: `url('${podcastDetail?.image}')` }}
-                        />
-                        <p className="pt-2 border-t border-gray-200 mt-4 text-base font-semibold w-full">{podcastDetail?.name}</p>
-                        <p className="text-sm text-gray-500 w-full italic">By {podcastDetail?.author}</p>
-                        <p className="pt-2 border-t border-gray-200 mt-4 text-sm font-semibold w-full">Description:</p>
-                        <p className="text-sm text-gray-500 w-full italic">By {podcastDetail?.summary}</p>
-                    </div>
+                    <DetailSidebarCard {...podcastDetail} />
                     <div className='Episodes flex flex-col gap-2 w-full'>
                         <div className="Title border border-gray-200 drop-shadow-sm p-2 w-full rounded">
                             <p className="font-bold">Episodes</p>

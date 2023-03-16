@@ -33,7 +33,7 @@ const PodcastsListScreen = () => {
             .finally(() => setIsLoading(false))
     }
     const filteredPodcastList = useMemo(() => {
-        return podcastList.filter(({ name, author }) => {
+        return (podcastList || []).filter(({ name, author }) => {
             const lowerCaseName = name.toLowerCase()
             const lowerCaseFilter = filterValue.toLowerCase()
             const lowerCaseAuthor = author.toLowerCase()
@@ -58,7 +58,9 @@ const PodcastsListScreen = () => {
                     <input type="text" name="filter" id="filter" placeholder="Filter podcasts..." className="border border-gray-200 py-1 px-2 rounded" value={filterValue} onChange={(e) => setFilterValue(e.target.value)} />
                 </div>
             </div>
-            {isLoading && <p className='w-full text-center'>loading...</p>}
+            {isLoading && <div className="absolute w-full flex justify-center items-center z-50">
+                <i className='relative pi pi-spinner animate-spin text-2xl text-blue-500'></i>
+            </div>}
             <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4'>
                 {!isLoading && !!filteredPodcastList.length && filteredPodcastList.map((podcast, idx) => <PodcastCard key={idx} { ...podcast } handleClickOnPodcast={handleClickOnPodcast} />)}
             </div>
